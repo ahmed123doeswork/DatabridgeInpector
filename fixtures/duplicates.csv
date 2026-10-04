@@ -1,0 +1,9 @@
+first_name,last_name,email,phone,address,postal_code
+Steven,Clarke,steven.clarke@example.com,+1 617-555-0111,100 Beacon St,02108
+Steven,Clarke,STEVEN.CLARKE@example.com,+1 (617) 555-0111,100 Beacon St,02108
+Patricia,Nolan,patricia.nolan@example.com,+1 303-555-0133,55 Larimer St,80202
+Patricia,Nolan,patricia.nolan@workmail.com,+1 720-555-0133,9000 Peoria St,80238
+Jonathan,Meyer,jon.meyer@example.com,+1 404-555-0155,10 Peachtree St,30303
+Jonathon,Meyer,jonathon.meyer99@example.net,+1 404-555-0199,88 Peachtree St,30303
+Helen,Ortiz,helen.ortiz@example.com,+1 512-555-0177,500 Congress Ave,78701
+Helene,Ortiz,helen.ortiz@example.com,+1 737-555-0177,500 Congress Ave,78701

@@ -1,0 +1,50 @@
+{
+  "_comment": "Hand-computed ground truth for fixtures/duplicates.csv, consumed by both frontend/tests/scoring.test.ts and backend/tests/test_duplicate_score_determinism.py. rowId convention: 1-indexed data row -> 'row-N' (header excluded). Rather than enumerating all C(8,2) pairs, this lists the pairs the scoring engine MUST surface (exact score/band/signals) and a pair it MUST prune (score below the 35-point surfacing threshold) so cross-language and repeat-run determinism can be asserted without hand-verifying every unrelated pair combination.",
+  "expectedPairs": [
+    {
+      "rowIdA": "row-1",
+      "rowIdB": "row-2",
+      "score": 100,
+      "confidenceBand": "high_confidence_duplicate",
+      "signals": [
+        { "signal": "email_exact", "points": 40, "reason": "email exact match" },
+        { "signal": "phone_normalized_exact", "points": 30, "reason": "phone exact match (normalized)" },
+        { "signal": "name_exact", "points": 20, "reason": "name exact match" },
+        { "signal": "address_fuzzy", "points": 10, "reason": "address 100% similar (Levenshtein)" }
+      ],
+      "reasonSummary": "100% — email exact match (+40); phone exact match (normalized) (+30); name exact match (+20); address 100% similar (Levenshtein) (+10)"
+    },
+    {
+      "rowIdA": "row-3",
+      "rowIdB": "row-4",
+      "score": 50,
+      "confidenceBand": "possible_duplicate",
+      "signals": [
+        { "signal": "name_exact", "points": 20, "reason": "name exact match" },
+        { "signal": "email_local_part_match", "points": 15, "reason": "email username matches, domain differs" },
+        { "signal": "phone_last7_match", "points": 15, "reason": "phone matches ignoring area code/extension" }
+      ],
+      "reasonSummary": "50% — name exact match (+20); email username matches, domain differs (+15); phone matches ignoring area code/extension (+15)"
+    },
+    {
+      "rowIdA": "row-7",
+      "rowIdB": "row-8",
+      "score": 79,
+      "confidenceBand": "likely_duplicate",
+      "signals": [
+        { "signal": "email_exact", "points": 40, "reason": "email exact match" },
+        { "signal": "phone_last7_match", "points": 15, "reason": "phone matches ignoring area code/extension" },
+        { "signal": "name_fuzzy", "points": 14, "reason": "name 92% similar (Levenshtein)" },
+        { "signal": "address_fuzzy", "points": 10, "reason": "address 100% similar (Levenshtein)" }
+      ],
+      "reasonSummary": "79% — email exact match (+40); phone matches ignoring area code/extension (+15); name 92% similar (Levenshtein) (+14); address 100% similar (Levenshtein) (+10)"
+    }
+  ],
+  "prunedPairs": [
+    {
+      "rowIdA": "row-5",
+      "rowIdB": "row-6",
+      "note": "Scores below 35 (name_fuzzy ~14pts + address_fuzzy ~9pts = ~23); must NOT appear in duplicate-candidate output."
+    }
+  ]
+}

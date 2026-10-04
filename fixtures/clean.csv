@@ -1,0 +1,13 @@
+first_name,last_name,email,phone,address,postal_code
+Alice,Nguyen,alice.nguyen@example.com,+1 415-555-0101,123 Market St,94105
+Brian,O'Connor,brian.oconnor@example.com,+1 415-555-0102,456 Mission St,94105
+Carla,Diaz,carla.diaz@example.com,+44 20 7946 0102,10 Downing St,SW1A2AA
+David,Kim,david.kim@example.com,+1 212-555-0144,789 5th Ave,10022
+Elena,Petrova,elena.petrova@example.com,+7 495 123-45-67,1 Tverskaya St,125009
+Farid,Haddad,farid.haddad@example.com,+971 50 123 4567,Sheikh Zayed Rd,00000
+Grace,Thompson,grace.thompson@example.com,+1 312-555-0177,200 State St,60604
+Hassan,Ali,hassan.ali@example.com,+92 300 1234567,Mall Road,54000
+Ingrid,Larsen,ingrid.larsen@example.com,+45 32 12 34 56,Nyhavn 1,1051
+Jamal,Brown,jamal.brown@example.com,+1 305-555-0199,100 Biscayne Blvd,33132
+Kyoko,Tanaka,kyoko.tanaka@example.com,+81 3-1234-5678,1-1 Chiyoda,100-0001
+Liam,Walsh,liam.walsh@example.com,+353 1 234 5678,O'Connell St,D01F5P2

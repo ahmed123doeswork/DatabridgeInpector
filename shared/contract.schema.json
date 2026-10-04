@@ -1,0 +1,320 @@
+{
+  "$ref": "#/definitions/ImportJob",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "ColumnMapping": {
+      "additionalProperties": false,
+      "description": "Maps a source CSV column header to a known contact field.",
+      "properties": {
+        "columns": {
+          "additionalProperties": {
+            "$ref": "#/definitions/ContactField"
+          },
+          "description": "sourceColumn -> target contact field. Unmapped source columns are dropped.",
+          "type": "object"
+        }
+      },
+      "required": [
+        "columns"
+      ],
+      "type": "object"
+    },
+    "ConfidenceBand": {
+      "enum": [
+        "high_confidence_duplicate",
+        "likely_duplicate",
+        "possible_duplicate"
+      ],
+      "type": "string"
+    },
+    "ContactField": {
+      "enum": [
+        "firstName",
+        "lastName",
+        "fullName",
+        "email",
+        "phone",
+        "addressLine1",
+        "postalCode"
+      ],
+      "type": "string"
+    },
+    "DuplicateCandidate": {
+      "additionalProperties": false,
+      "properties": {
+        "confidenceBand": {
+          "$ref": "#/definitions/ConfidenceBand"
+        },
+        "reasonSummary": {
+          "description": "Human-readable, assembled from signals, sorted by descending contribution.",
+          "type": "string"
+        },
+        "rowIdA": {
+          "type": "string"
+        },
+        "rowIdB": {
+          "type": "string"
+        },
+        "score": {
+          "type": "number"
+        },
+        "signals": {
+          "items": {
+            "$ref": "#/definitions/ScoreSignal"
+          },
+          "type": "array"
+        }
+      },
+      "required": [
+        "rowIdA",
+        "rowIdB",
+        "score",
+        "confidenceBand",
+        "signals",
+        "reasonSummary"
+      ],
+      "type": "object"
+    },
+    "ExportResult": {
+      "additionalProperties": false,
+      "properties": {
+        "csvContent": {
+          "type": "string"
+        },
+        "errorReportCsvContent": {
+          "type": "string"
+        },
+        "excludedRowCount": {
+          "type": "number"
+        },
+        "exportedAt": {
+          "type": "string"
+        },
+        "jobId": {
+          "type": "string"
+        },
+        "rowCount": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "jobId",
+        "rowCount",
+        "excludedRowCount",
+        "csvContent",
+        "errorReportCsvContent",
+        "exportedAt"
+      ],
+      "type": "object"
+    },
+    "ImportJob": {
+      "additionalProperties": false,
+      "properties": {
+        "createdAt": {
+          "type": "string"
+        },
+        "duplicates": {
+          "items": {
+            "$ref": "#/definitions/DuplicateCandidate"
+          },
+          "type": "array"
+        },
+        "excludedRowIds": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "exportResult": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/ExportResult"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "fileHash": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "mapping": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/ColumnMapping"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "normalizationLog": {
+          "items": {
+            "$ref": "#/definitions/NormalizationSuggestion"
+          },
+          "type": "array"
+        },
+        "rowCount": {
+          "type": "number"
+        },
+        "status": {
+          "$ref": "#/definitions/JobStatus"
+        },
+        "validationErrors": {
+          "items": {
+            "$ref": "#/definitions/ValidationError"
+          },
+          "type": "array"
+        }
+      },
+      "required": [
+        "id",
+        "status",
+        "fileHash",
+        "rowCount",
+        "createdAt",
+        "mapping",
+        "validationErrors",
+        "duplicates",
+        "normalizationLog",
+        "excludedRowIds",
+        "exportResult"
+      ],
+      "type": "object"
+    },
+    "JobStatus": {
+      "enum": [
+        "uploaded",
+        "mapped",
+        "validated",
+        "reviewed",
+        "exported"
+      ],
+      "type": "string"
+    },
+    "NormalizationStatus": {
+      "enum": [
+        "pending",
+        "accepted",
+        "rejected"
+      ],
+      "type": "string"
+    },
+    "NormalizationSuggestion": {
+      "additionalProperties": false,
+      "properties": {
+        "field": {
+          "$ref": "#/definitions/ContactField"
+        },
+        "originalValue": {
+          "type": "string"
+        },
+        "rowId": {
+          "type": "string"
+        },
+        "rule": {
+          "type": "string"
+        },
+        "status": {
+          "$ref": "#/definitions/NormalizationStatus"
+        },
+        "suggestedValue": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "rowId",
+        "field",
+        "originalValue",
+        "suggestedValue",
+        "rule",
+        "status"
+      ],
+      "type": "object"
+    },
+    "ScoreSignal": {
+      "additionalProperties": false,
+      "description": "One named, weighted contribution to a duplicate-pair score.",
+      "properties": {
+        "points": {
+          "type": "number"
+        },
+        "reason": {
+          "type": "string"
+        },
+        "signal": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "signal",
+        "points",
+        "reason"
+      ],
+      "type": "object"
+    },
+    "ValidationError": {
+      "additionalProperties": false,
+      "properties": {
+        "code": {
+          "$ref": "#/definitions/ValidationErrorCode"
+        },
+        "field": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/ContactField"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "message": {
+          "type": "string"
+        },
+        "originalValue": {
+          "description": "The raw, unmodified cell value that triggered this finding.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "rowId": {
+          "type": "string"
+        },
+        "severity": {
+          "$ref": "#/definitions/ValidationSeverity"
+        }
+      },
+      "required": [
+        "rowId",
+        "field",
+        "code",
+        "severity",
+        "message",
+        "originalValue"
+      ],
+      "type": "object"
+    },
+    "ValidationErrorCode": {
+      "enum": [
+        "missing_required_field",
+        "invalid_email",
+        "ambiguous_phone",
+        "formula_injection_risk",
+        "empty_row"
+      ],
+      "type": "string"
+    },
+    "ValidationSeverity": {
+      "enum": [
+        "error",
+        "warning"
+      ],
+      "type": "string"
+    }
+  }
+}

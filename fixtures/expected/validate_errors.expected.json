@@ -1,0 +1,30 @@
+{
+  "_comment": "Hand-computed validation findings per fixture, keyed by fixture filename. rowId = 'row-N' (1-indexed data row, header excluded). Consumed by frontend/tests/csvInjection.test.ts and backend/tests/test_formula_injection.py / test_ambiguous_phone.py.",
+  "clean.csv": {
+    "expectedErrorCount": 0,
+    "expectedWarningCount": 0
+  },
+  "ambiguous_phones.csv": {
+    "expectedErrorCount": 0,
+    "expectedFindings": [
+      { "rowId": "row-1", "field": "phone", "code": "ambiguous_phone", "severity": "warning" },
+      { "rowId": "row-2", "field": "phone", "code": "ambiguous_phone", "severity": "warning" },
+      { "rowId": "row-3", "field": "phone", "code": "ambiguous_phone", "severity": "warning" },
+      { "rowId": "row-4", "field": "phone", "code": "ambiguous_phone", "severity": "warning" },
+      { "rowId": "row-5", "field": "phone", "code": "ambiguous_phone", "severity": "warning" },
+      { "rowId": "row-6", "field": "phone", "code": "ambiguous_phone", "severity": "warning" }
+    ],
+    "note": "None of these phones carry an explicit leading '+<countrycode>', so every row must be flagged ambiguous and none may have a guessed country code applied."
+  },
+  "formula_injection.csv": {
+    "expectedFindings": [
+      { "rowId": "row-1", "field": "firstName", "code": "formula_injection_risk", "severity": "warning" },
+      { "rowId": "row-2", "field": "lastName", "code": "formula_injection_risk", "severity": "warning" },
+      { "rowId": "row-3", "field": "email", "code": "formula_injection_risk", "severity": "warning" },
+      { "rowId": "row-4", "field": "addressLine1", "code": "formula_injection_risk", "severity": "warning" },
+      { "rowId": "row-5", "field": "addressLine1", "code": "formula_injection_risk", "severity": "warning" }
+    ],
+    "expectedCleanRowIds": ["row-6"],
+    "note": "Leading characters '=', '+', '-', '@' on any cell trigger formula_injection_risk per OWASP CSV-injection guidance. On export these cells must be re-emitted with a leading single-quote, value otherwise unchanged."
+  }
+}

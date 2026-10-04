@@ -1,0 +1,7 @@
+first_name,last_name,email,phone,address,postal_code
+"=HYPERLINK(""http://evil.example"",""Click"")",Normal,eve@example.com,+1 555-555-0100,1 Elm St,00001
+Normal,+CMD(calc.exe),normal1@example.com,+1 555-555-0101,2 Oak St,00002
+Normal,Surname,"=1+1",+1 555-555-0102,3 Pine St,00003
+Normal,Surname2,normal2@example.com,+1 555-555-0103,"-2+3 Birch St",00004
+Normal,Surname3,normal3@example.com,+1 555-555-0104,@SUM(A1:A2) Cedar St,00005
+Safe,Row,safe.row@example.com,+1 555-555-0105,100 Safe St,00006

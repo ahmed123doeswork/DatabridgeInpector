@@ -1,0 +1,19 @@
+# Node
+node_modules/
+frontend/dist/
+frontend/test-results/
+frontend/playwright-report/
+frontend/blob-report/
+frontend/playwright/.cache/
+
+# Python
+backend/.venv/
+backend/__pycache__/
+backend/**/__pycache__/
+backend/.pytest_cache/
+backend/*.egg-info/
+*.pyc
+
+# Editors / OS
+.DS_Store
+Thumbs.db

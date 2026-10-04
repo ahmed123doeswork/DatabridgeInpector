@@ -1,0 +1,30 @@
+{
+  "_comment": "Hand-computed normalization suggestions for a sample of fixtures/clean.csv rows. rowId = 'row-N' (1-indexed data row, header excluded). Rules: lowercase_trim_email (email -> trim+lowercase), canonicalize_phone_format (strip all formatting chars but keep leading '+' and digits), normalize_name_casing (trim, collapse whitespace, title-case each word). A suggestion is only emitted when suggestedValue differs from originalValue.",
+  "clean.csv": [
+    {
+      "rowId": "row-5",
+      "field": "phone",
+      "originalValue": "+7 495 123-45-67",
+      "suggestedValue": "+74951234567",
+      "rule": "canonicalize_phone_format",
+      "status": "pending"
+    },
+    {
+      "rowId": "row-9",
+      "field": "phone",
+      "originalValue": "+45 32 12 34 56",
+      "suggestedValue": "+4532123456",
+      "rule": "canonicalize_phone_format",
+      "status": "pending"
+    },
+    {
+      "rowId": "row-11",
+      "field": "phone",
+      "originalValue": "+81 3-1234-5678",
+      "suggestedValue": "+81312345678",
+      "rule": "canonicalize_phone_format",
+      "status": "pending"
+    }
+  ],
+  "note": "This is a representative sample, not exhaustive — most clean.csv rows have phone formatting characters (spaces/dashes) and would also produce a canonicalize_phone_format suggestion. A suggestion is only emitted when suggestedValue differs from originalValue; a test asserting on these three rows should not assume other rows produce zero suggestions."
+}
